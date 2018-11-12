@@ -1,0 +1,81 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+struct contan
+{
+int process;
+int burst;
+int arrival;
+bool operator <(contan a)
+{
+ return arrival<a.arrival;
+
+}
+};
+int gannchrt[100],wating[100],turn[100];
+void gannchart(contan con[],int n)
+{
+ gannchrt[0]=con[0].arrival;
+ for(int i=1;i<=n;i++)
+ {
+   gannchrt[i]=gannchrt[i-1]+con[i-1].burst;
+ }
+}
+
+
+double avgwait(contan con[],int n)
+{
+int avg=0;
+for(int i=0;i<n;i++)
+{
+wating[i]=gannchrt[i]-con[i].arrival;
+avg+=wating[i];
+}
+double ans=(double)avg/(double)n;
+return ans;
+}
+
+double turnaround(contan con[],int n)
+{
+double ans=0;
+  for(int i=0;i<n;i++)
+  {
+    turn[i]=gannchrt[i+1]-con[i].arrival;
+    ans+=turn[i];
+  }
+  return ans/(double)n;
+}
+int main()
+{
+   int n;
+   printf("Enter processs number : ");
+   scanf("%d",&n);
+   contan con[n];
+   for(int i=0;i<n;i++)
+   {
+    printf("Enter %d process bursttime & arrivel time : ",i+1);
+    int a,b;
+    scanf("%d%d",&a,&b);
+    con[i].process=i+1;
+    con[i].burst=a;
+    con[i].arrival=b;
+   }
+   sort(con,con+(n+1));
+   gannchart(con,n);
+   /*printing gannchart */
+   for(int i=0;i<=n;i++)
+   {printf("%d <-P%d-> ",gannchrt[i],con[i].process);
+
+   }
+   printf("\n\n");
+   double avg=avgwait(con,n);
+   double trn=turnaround(con,n);
+   /*for printing waiting time turn around time */
+   printf("process\t\tarrive\t\tburst\t waiting\tturnaround\n");
+   for(int i=0;i<n;i++)
+   {
+     printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\n",con[i].process,con[i].arrival,con[i].burst,wating[i],turn[i]);
+   }
+   printf("avarage waiting time is : %f and turnaround time is : %f",avg,trn);
+    return 0;
+}
