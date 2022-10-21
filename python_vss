@@ -1,0 +1,30 @@
+import random
+
+class FlashCard:
+    def __init__(self,dict):
+        self._fruit_dict = dict
+    def choice(self):
+        fruit = random.choice(list(self._fruit_dict.keys()))
+        color = self._fruit_dict.get(fruit)
+        gess_color = input("Gess The color of Fruit : ")
+        if color == gess_color:
+            print('correct')
+            return
+        print('incorrect')
+        return
+# flash_card = FlashCard({
+#     'mango':'green',
+#     'orange':'orange',
+#     'blue bery':'blue',
+#     'banana':'yellow'
+# })
+# flash_card.choice()
+
+test_list = [[5, 8, 10], [2, 0, 9], [5, 4, 2], [2, 3, 9]]
+dict_key = dict()
+for index , value in enumerate(test_list[0],1):
+    dict_key[value] = test_list[index]
+print(dict_key)
+    
+
+
